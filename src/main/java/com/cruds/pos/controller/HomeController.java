@@ -23,12 +23,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.cruds.pos.entity.Establishment;
+import com.cruds.pos.entity.Floor;
 import com.cruds.pos.entity.L1Menu;
 import com.cruds.pos.entity.MenuMaster;
 import com.cruds.pos.entity.Tax;
 import com.cruds.pos.entity.User;
+import com.cruds.pos.formbean.EstablishFormBean;
+import com.cruds.pos.formbean.FloorFormBean;
 import com.cruds.pos.formbean.L1FormBean;
 import com.cruds.pos.formbean.L2FormBean;
+import com.cruds.pos.formbean.TableFormBean;
+import com.cruds.pos.service.EstablishmentService;
+import com.cruds.pos.service.FloorService;
 import com.cruds.pos.service.L1MenuService;
 import com.cruds.pos.service.MenuMasterService;
 import com.cruds.pos.service.TaxService;
@@ -38,6 +45,12 @@ import com.cruds.pos.service.UserService;
 
 @Controller
 public class HomeController {
+	@Autowired
+	FloorService floorService;
+	
+	@Autowired
+	EstablishmentService establishmentService;
+	
 	@Autowired
 	UserService userService;
 	
@@ -219,4 +232,63 @@ public class HomeController {
 		
 	}
 	
-}
+	@RequestMapping(value="/establishment", method=RequestMethod.GET)
+	public ModelAndView cretaeEstablish()
+	{	
+			ModelAndView mv = new ModelAndView("establishment", "EstablishFormBean", new EstablishFormBean());
+		    Map<Long, String> mmMap = menuMasterService.getAllMenu().stream().collect(Collectors.toMap(MenuMaster :: getId, MenuMaster :: getName));	
+			mv.addObject("MENUMASTERMAP",mmMap);
+			return mv;
+	}
+	
+	@RequestMapping(value="/establishment", method=RequestMethod.POST)
+	public String establishmentupost(@ModelAttribute("EstablishFormBean") EstablishFormBean establishFormBean)
+	{
+		//System.out.println(l1FormBean.getMmId());
+		//System.out.println(l1FormBean.getTaxId());
+		//System.out.println(l1FormBean.getL1MenuName());
+		//MenuMaster menu=new MenuMaster(menumaster);
+		establishmentService.createEstablishment(establishFormBean.getName(), establishFormBean.getmId());
+		return "redirect:establishment.html";
+		
+		
+	}
+
+	
+	@RequestMapping(value="/floor", method=RequestMethod.GET)
+	public ModelAndView cretaeFloor()
+	{	
+			ModelAndView mv = new ModelAndView("floor", "FloorFormBean", new FloorFormBean());
+		    Map<Long, String> estMap = establishmentService.getAllEstablishment().stream().collect(Collectors.toMap(Establishment :: getId, Establishment :: getName));	
+			mv.addObject("ESTABLISHMENTMAP",estMap);
+			mv.addObject("FLOORLIST", floorService.getAllfloor());
+			return mv;
+	}
+	
+	@RequestMapping(value="/floor", method=RequestMethod.POST)
+	public String postfloor(@ModelAttribute("FloorFormBean") FloorFormBean floorFormBean)
+	{
+		//System.out.println(floorFormBean.getName());
+		//System.out.println(floorFormBean.getEstId());
+		//System.out.println(l1FormBean.getL1MenuName());
+		//MenuMaster menu=new MenuMaster(menumaster);
+		floorService.createFloor(floorFormBean.getName(),floorFormBean.getEstId());
+		return "redirect:floor.html";
+		
+	}
+	
+	@RequestMapping(value="/table", method=RequestMethod.GET)
+	public ModelAndView cretaetable()
+	{	
+			ModelAndView mv = new ModelAndView("table", "TableFormBean", new TableFormBean());
+			
+		    Map<Long, String> estMap = establishmentService.getAllEstablishment().stream().collect(Collectors.toMap(Establishment :: getId, Establishment :: getName));	
+			mv.addObject("ESTABLISHMENTMAP",estMap);
+			 Map<Long, String> mmMap = floorService.getAllfloor().stream().collect(Collectors.toMap(Floor :: getId, Floor :: getName));	
+			mv.addObject("FLOORLIST",mmMap);
+			mv.addObject("FLOORLIST", floorService.getAllfloor());
+			return mv;
+	}
+	
+	
+	}

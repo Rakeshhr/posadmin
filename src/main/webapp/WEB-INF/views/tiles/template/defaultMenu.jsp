@@ -27,19 +27,19 @@
             </a>
           </li>
            <li class="nav-item">
-            <a class="nav-link" href="index.html">
+            <a class="nav-link" href="establishment.html">
               <i class="fa fa-building-o "></i>
               <span class="menu-title tab">Estab</span>
             </a>
           </li>
            <li class="nav-item">
-            <a class="nav-link" href="index.html">
+            <a class="nav-link" href="floor.html">
               <i class="fa fa-indent"></i>
               <span class="menu-title tab">Floor</span>
             </a>
           </li>
            <li class="nav-item">
-            <a class="nav-link" href="index.html">
+            <a class="nav-link" href="table.html">
               <i class="fa fa-table"></i>
               <span class="menu-title tab">Table</span>
             </a>
