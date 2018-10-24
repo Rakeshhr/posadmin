@@ -9,6 +9,22 @@
 		var v1 = document.getElementById("mmId").value;
 		   document.getElementById("formid").submit();
 	}
+	
+	function hideLink() {
+	  var x = document.getElementById('myLink');
+	  var b = document.getElementById('btnLink');
+
+
+	  if (x.style.display !== 'block') {
+	    x.style.display = 'block';
+	    b.childNodes[0].nodeValue = "Add";
+
+	  } else {
+	    x.style.display = 'none';
+	    b.childNodes[0].nodeValue = "Add";
+	  }
+	}
+	
 
 </script>
 <div class="col-12">
@@ -57,7 +73,33 @@
 		<input type="submit" class="btn btn-success mr-2" value="Submit" id="submit">
 
 		</form:form>
+		<br><br>
+		<input type="submit"class="btn btn-success mr-2" value="Show List of L2Menu" id="btnLink" onclick="hideLink()">
 		
+		<div class="col-lg-12 grid-margin stretch-card" id="myLink">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title" id="target">L2 Menu Table</h4>
+                
+                  <div class="table-responsive">
+                    <table class="table table-dark">
+                      <thead>
+                        <tr>
+                         <th>L2Menu Name</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <c:forEach var="s" items="${L2MENULIST}">
+						<tr>
+						<td><c:out value="${s.name}"/></td>
+						</tr>
+						</c:forEach>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
 
 		</div>
 		</div>

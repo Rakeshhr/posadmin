@@ -41,14 +41,14 @@
 		</div>
          </form><br>
                       
-		<form:form class="forms-sample"  modelAttribute="l3FormBean" action="l2menu.html" method="post">
+		<form:form class="forms-sample"  modelAttribute="l3FormBean" action="l3menu.html" method="post">
 		
 		
 		
 		<br>
 		<div class="col-sm-9" >
 			<h4>Select L2 Menu name</h4><br>
- 			<form:select path="l1mmId" class="form-control">
+ 			<form:select path="l2mmId" class="form-control">
 				<form:option value="NONE" label="--- Select ---"/>
 			    <form:options items="${L2MENULIST}"/>
 			    

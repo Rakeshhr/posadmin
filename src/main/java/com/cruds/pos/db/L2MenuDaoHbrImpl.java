@@ -40,6 +40,20 @@ public class L2MenuDaoHbrImpl implements L2MenuDao{
 	}
 	
 	@Override
+	public List<L2Menu> getAllL2menuList() {
+		Session session = sessionFactory.openSession();
+
+		Transaction tx = session.beginTransaction();
+	
+		String hql = "FROM L2Menu";
+		Query query = session.createQuery(hql);
+		List<L2Menu> results = query.list();
+		tx.commit();
+		session.close();
+		return results;
+	}
+	
+	@Override
 	public List<L2Menu> getAllL2menuList(Long mmId) {
 		Session session = sessionFactory.openSession();
 
