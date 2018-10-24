@@ -51,7 +51,7 @@
             </a>
           </li>
            <li class="nav-item">
-            <a class="nav-link" href="index.html">
+            <a class="nav-link" href="logout.html">
               <i class="fa fa-spinner"></i>
               <span class="menu-title tab">LogOut</span>
             </a>

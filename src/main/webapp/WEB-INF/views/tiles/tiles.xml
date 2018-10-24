@@ -58,8 +58,12 @@
        <put-attribute name="body" value="/WEB-INF/views/pages/l1menu.jsp" />  
    </definition>
    <definition name="l2menu" extends="base-definition">  
-       <put-attribute name="title" value="l1menu" />  
+       <put-attribute name="title" value="l2menu" />  
        <put-attribute name="body" value="/WEB-INF/views/pages/l2menu.jsp" />  
+   </definition>
+   <definition name="l3menu" extends="base-definition">  
+       <put-attribute name="title" value="l3menu" />  
+       <put-attribute name="body" value="/WEB-INF/views/pages/l3menu.jsp" />  
    </definition>
   
    

@@ -6,40 +6,58 @@
 		<script type="text/javascript">
 
 	function myfun(){
-		var v1 = document.getElementById("mmId").value;
-		   document.getElementById("formid").submit();
+   document.getElementById("formid").submit();
 	}
+	function myfun1(){
+		var v1 = document.getElementById("l1mmId").value;
+		alert(v1);
+   document.getElementById("formid1").submit();
+			}
 
 </script>
 <div class="col-12">
                   <div class="card">
                     <div class="card-body">
                       <h3 >Add L2 Menu</h3><br><br>
-                      <form class="forms-sample" id="formid" action="l2menupost.html" method="post">
+                      <form class="forms-sample" id="formid" action="l3menupost1.html" method="post">
                       <div class="col-sm-9" >
 			<h4>Select Menu Master name</h4><br>
- 			<form:select path="l2FormBean" class="form-control" id="mmId" name="mmId" onchange="myfun()">
+ 			<form:select path="l3FormBean" class="form-control" id="mmId" name="mmId" onchange="myfun()">
 				<form:option value="NONE" label="--- Select ---"/>
 			    <form:options items="${MENUMASTERMAP}"/>
 			    
 			</form:select> 
 		</div>
-                      </form><br>
-		<form:form class="forms-sample" id="formid" modelAttribute="l2FormBean" action="l2menu.html" method="post">
-		
-		
+		</form>
+		<br>
+		<form class="forms-sample" id="formid1" action="l3menupost2.html" method="post">
 		<div class="col-sm-9" >
 			<h4>Select L1 Menu name</h4><br>
- 			<form:select path="l1mmId" class="form-control">
+ 			<form:select path="l3FormBean" class="form-control" id="l1mmId" name="l1mmId" onchange="myfun1()">
 				<form:option value="NONE" label="--- Select ---"/>
 			    <form:options items="${L1MENULIST}"/>
 			    
 			</form:select> 
 		</div>
+         </form><br>
+                      
+		<form:form class="forms-sample"  modelAttribute="l3FormBean" action="l2menu.html" method="post">
+		
+		
+		
+		<br>
+		<div class="col-sm-9" >
+			<h4>Select L2 Menu name</h4><br>
+ 			<form:select path="l1mmId" class="form-control">
+				<form:option value="NONE" label="--- Select ---"/>
+			    <form:options items="${L2MENULIST}"/>
+			    
+			</form:select> 
+		</div>
 		<br>
 		<div class="col-sm-9">
-            <h4>Enter L2 menu name</h4><br>
-             <form:input path = "l2MenuName" class="form-control"  placeholder="Enter L1 Menu Name" />
+            <h4>Enter L3 menu name</h4><br>
+             <form:input path = "l3MenuName" class="form-control"  placeholder="Enter L1 Menu Name" />
         </div>
         <br>
         <div class="col-sm-9">
