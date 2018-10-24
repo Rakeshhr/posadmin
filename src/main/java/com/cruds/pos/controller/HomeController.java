@@ -199,6 +199,8 @@ public class HomeController {
 		    Map<Long, String> taxMap = taxService.getAllTaxList().stream().collect(Collectors.toMap(Tax :: getId, Tax :: getName));
 
 			mv.addObject("TAXMAP",taxMap);
+						
+			mv.addObject("L2MENULIST",l1menuservice.getAllL2menuList() );
 			
 			
 			return mv;
@@ -300,7 +302,7 @@ public class HomeController {
 			ModelAndView mv = new ModelAndView("l3menu", "l3FormBean", new L3FormBean());
 		    Map<Long, String> mmMap = menuMasterService.getAllMenu().stream().collect(Collectors.toMap(MenuMaster :: getId, MenuMaster :: getName));		
 			mv.addObject("MENUMASTERMAP",mmMap);
-
+			mv.addObject("L3MENULIST", l1menuservice.getAllL3menuList());
 			return mv;
 		
 	}

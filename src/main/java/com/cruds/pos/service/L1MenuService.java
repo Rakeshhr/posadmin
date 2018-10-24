@@ -47,6 +47,11 @@ public class L1MenuService {
 		return dao1.createL2menu(name, l1mmId, price, taxId);
 	}
 	
+	public List<L2Menu> getAllL2menuList()
+	{
+		return dao1.getAllL2menuList();
+	}
+	
 	public List<L2Menu> getAllL2menuList(Long mmId)
 	{
 		return dao1.getAllL2menuList(mmId);
@@ -55,5 +60,10 @@ public class L1MenuService {
 	public boolean createl3menu(String name,Long l2mmId,Double price,Long taxId)
 	{
 		return dao2.createL3menu(name, l2mmId, price, taxId);
+	}
+	
+	public List<L3Menu> getAllL3menuList()
+	{
+		return dao2.getAllL3menuList();
 	}
 }

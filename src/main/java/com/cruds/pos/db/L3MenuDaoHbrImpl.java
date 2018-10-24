@@ -1,7 +1,10 @@
 package com.cruds.pos.db;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -32,6 +35,20 @@ public class L3MenuDaoHbrImpl implements L3MenuDao {
 		session.close();
 		System.out.println("Hibernate DAO Create user Method");
 		return true;
+	}
+	
+	@Override
+	public List<L3Menu> getAllL3menuList() {
+		Session session = sessionFactory.openSession();
+
+		Transaction tx = session.beginTransaction();
+	
+		String hql = "FROM L3Menu";
+		Query query = session.createQuery(hql);
+		List<L3Menu> results = query.list();
+		tx.commit();
+		session.close();
+		return results;
 	}
 
 }
