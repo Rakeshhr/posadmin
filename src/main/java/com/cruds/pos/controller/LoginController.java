@@ -87,7 +87,13 @@ public class LoginController {
 	    return "signup"; 
 	}
 	
-	
+	@RequestMapping(value = { "/logout"}, method = RequestMethod.GET)
+    public String logout(HttpSession session,Model model,RedirectAttributes redirectAttributes) {
+		redirectAttributes.addAttribute("logout","You have been logged out successfully.");
+		session.invalidate();
+		model.asMap().clear();
+        return "redirect:login";
+    }	
 	
 	
 	
