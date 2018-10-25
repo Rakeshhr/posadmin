@@ -28,7 +28,11 @@ public class L1MenuDaoHbrImpl implements L1MenuDao {
 		Transaction tx = session.beginTransaction();
 		
 		MenuMaster mm = session.load(MenuMaster.class, mmId);
-		Tax dbTax = session.load(Tax.class, taxId);
+		Tax dbTax = null;
+		if(taxId!=null)
+		{
+		dbTax = session.load(Tax.class, taxId);
+		}
 		L1Menu l1Menu = new L1Menu(name, mm, dbTax);
 		session.saveOrUpdate(l1Menu);
 		

@@ -7,6 +7,20 @@ public class L2FormBean {
 	
 	private Long l1mmId;
 	private Long taxId;
+	
+	
+	public L2FormBean() {
+		super();
+	}
+
+	public L2FormBean(String l2MenuName, Double price, Long l1mmId, Long taxId) {
+		super();
+		this.l2MenuName = l2MenuName;
+		this.price = price;
+		this.l1mmId = l1mmId;
+		this.taxId = taxId;
+	}
+	
 	public String getL2MenuName() {
 		return l2MenuName;
 	}
@@ -31,6 +45,12 @@ public class L2FormBean {
 	}
 	public void setL1mmId(Long l1mmId) {
 		this.l1mmId = l1mmId;
+	}
+
+	@Override
+	public String toString() {
+		return "L2FormBean [l2MenuName=" + l2MenuName + ", price=" + price + ", l1mmId=" + l1mmId + ", taxId=" + taxId
+				+ "]";
 	}
 	
 	

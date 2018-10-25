@@ -43,6 +43,7 @@ import com.cruds.pos.service.L1MenuService;
 import com.cruds.pos.service.MenuMasterService;
 import com.cruds.pos.service.TaxService;
 import com.cruds.pos.service.UserService;
+import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 
 
 
@@ -178,11 +179,11 @@ public class HomeController {
 	@RequestMapping(value="/l1menu", method=RequestMethod.POST)
 	public String l1menupost(@ModelAttribute("l1FormBean") L1FormBean l1FormBean)
 	{
-		//System.out.println(l1FormBean.getMmId());
+		System.out.println(l1FormBean);
 		//System.out.println(l1FormBean.getTaxId());
 		//System.out.println(l1FormBean.getL1MenuName());
 		//MenuMaster menu=new MenuMaster(menumaster);
-		l1menuservice.createL1menu(l1FormBean.getL1MenuName(),l1FormBean.getMmId(),l1FormBean.getTaxId());
+		l1menuservice.createL1menu(l1FormBean);
 		return "redirect:l1menu.html";
 		
 		
@@ -199,10 +200,7 @@ public class HomeController {
 		    Map<Long, String> taxMap = taxService.getAllTaxList().stream().collect(Collectors.toMap(Tax :: getId, Tax :: getName));
 
 			mv.addObject("TAXMAP",taxMap);
-						
-			mv.addObject("L2MENULIST",l1menuservice.getAllL2menuList() );
-			
-			
+	
 			return mv;
 		
 	}
@@ -225,15 +223,17 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value="/l2menu", method=RequestMethod.POST)
-	public String l2menupost(@ModelAttribute("l2FormBean") L2FormBean l2FormBean)
+	public ModelAndView l2menupost(@ModelAttribute("l2FormBean") L2FormBean l2FormBean)
 	{
-	
-		if(l2FormBean.getL2MenuName()!=null)
-		{
-		l1menuservice.createl2menu(l2FormBean.getL2MenuName(),l2FormBean.getL1mmId(),l2FormBean.getPrice(),l2FormBean.getTaxId());
-		}
-		return "redirect:l2menu.html";
+		System.out.println(l2FormBean);
 		
+		l1menuservice.createl2menu(l2FormBean);
+		
+		ModelAndView mv = new ModelAndView("l2menu", "l2FormBean", new L2FormBean());
+		
+		mv.addObject("L2MENULIST",l1menuservice.getAllL2menuList(l2FormBean.getL1mmId()) );
+		
+		return mv;
 		
 	}
 	

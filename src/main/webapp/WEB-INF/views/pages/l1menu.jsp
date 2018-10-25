@@ -42,7 +42,7 @@
         <div class="col-sm-9" >
         	<h4>Select Tax from list</h4><br>
  			<form:select path="taxId" class="form-control">
-				<form:option value="NONE" label="--- Select ---"/>
+				<form:option value="0" label="--- Select ---"/>
 			    <form:options items="${TAXMAP}" />
 			</form:select>
 		</div><br><br>

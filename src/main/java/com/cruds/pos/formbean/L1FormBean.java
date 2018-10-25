@@ -24,6 +24,10 @@ public class L1FormBean {
 	public void setTaxId(Long taxId) {
 		this.taxId = taxId;
 	}
+	@Override
+	public String toString() {
+		return "L1FormBean [l1MenuName=" + l1MenuName + ", mmId=" + mmId + ", taxId=" + taxId + "]";
+	}
 	
 
 }

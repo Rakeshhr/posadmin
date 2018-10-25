@@ -13,7 +13,6 @@ import org.springframework.stereotype.Repository;
 
 import com.cruds.pos.entity.L1Menu;
 import com.cruds.pos.entity.L2Menu;
-import com.cruds.pos.entity.MenuMaster;
 import com.cruds.pos.entity.Tax;
 
 @Repository
@@ -29,7 +28,12 @@ public class L2MenuDaoHbrImpl implements L2MenuDao{
 		Transaction tx = session.beginTransaction();
 		
 		L1Menu mm = session.load(L1Menu.class, l1mmId);
-		Tax dbTax = session.load(Tax.class, taxId);
+		Tax dbTax = null;
+		if(taxId != null)
+		{
+			dbTax = session.load(Tax.class, taxId);
+		}
+		
 		L2Menu l2Menu = new L2Menu(name, mm,price, dbTax);
 		session.saveOrUpdate(l2Menu);
 		
