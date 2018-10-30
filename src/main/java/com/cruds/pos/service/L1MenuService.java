@@ -15,6 +15,7 @@ import com.cruds.pos.entity.MenuMaster;
 import com.cruds.pos.entity.Tax;
 import com.cruds.pos.formbean.L1FormBean;
 import com.cruds.pos.formbean.L2FormBean;
+import com.cruds.pos.formbean.L3FormBean;
 
 
 @Service
@@ -28,25 +29,25 @@ public class L1MenuService {
 	@Autowired
 	L3MenuDao l3MenuDAO;
 	
-	public boolean createL1menu(L1FormBean l1formbean)
+	public boolean createL1menu(L1FormBean l1formbean,Long mmId)
 	{
 		if(l1formbean.getTaxId()==0)
 		{
-			return l1MenuDAO.createL1menu(l1formbean.getL1MenuName(), l1formbean.getMmId(), null);
+			return l1MenuDAO.createL1menu(l1formbean.getL1MenuName(), mmId, null);
 		}
 		
 		else
 		{
-			return l1MenuDAO.createL1menu(l1formbean.getL1MenuName(), l1formbean.getMmId(), l1formbean.getTaxId());
+			return l1MenuDAO.createL1menu(l1formbean.getL1MenuName(), mmId, l1formbean.getTaxId());
 		}
 		
 		
 	}
 	
-	public List<L1Menu> getAllL1menulist()
+	public List<L1Menu> getAllL1menulist(Long mmId)
 	{
 		
-		return l1MenuDAO.getAllL1menu();
+		return l1MenuDAO.getAllL1menuList(mmId);
 	}
 	
 	public List<L1Menu> getAllL1menuList(Long mmId)
@@ -60,15 +61,15 @@ public class L1MenuService {
 		return l2MenuDAO.createL2menu(name, l1mmId, price, taxId);
 	}
 	
-	public boolean createl2menu(L2FormBean l2formBean)
+	public boolean createl2menu(L2FormBean l2formBean,Long l1menuid)
 	{
 		if(l2formBean.getTaxId() == 0)
 		{
-			return l2MenuDAO.createL2menu(l2formBean.getL2MenuName(), l2formBean.getL1mmId(), l2formBean.getPrice(), null);
+			return l2MenuDAO.createL2menu(l2formBean.getL2MenuName(), l1menuid, l2formBean.getPrice(), null);
 		}
 		else
 		{
-			return l2MenuDAO.createL2menu(l2formBean.getL2MenuName(), l2formBean.getL1mmId(), l2formBean.getPrice(), l2formBean.getTaxId());
+			return l2MenuDAO.createL2menu(l2formBean.getL2MenuName(), l1menuid, l2formBean.getPrice(), l2formBean.getTaxId());
 
 		}
 		
@@ -85,9 +86,9 @@ public class L1MenuService {
 		return l2MenuDAO.getAllL2menuList(mmId);
 	}
 	
-	public boolean createl3menu(String name,Long l2mmId,Double price,Long taxId)
+	public boolean createl3menu(L3FormBean l3formBean,Long l2mmid)
 	{
-		return l3MenuDAO.createL3menu(name, l2mmId, price, taxId);
+		return l3MenuDAO.createL3menu(l3formBean.getL3MenuName(), l2mmid, l3formBean.getPrice(), l3formBean.getTaxId());
 	}
 	
 	public List<L3Menu> getAllL3menuList()

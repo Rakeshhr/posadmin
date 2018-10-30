@@ -4,14 +4,14 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript">
-	function l2menuhelper()
-	{
+	function l2menuhelper() {
 		document.getElementById("l2menuformid").submit();
 	}
-	function myfun(){
-		   document.getElementById("formid").submit();
+	function myfun() {
+		document.getElementById("formid").submit();
 	}
 </script>
 
@@ -19,8 +19,7 @@
 	<div class="card">
 		<div class="card-body">
 			<h3>Add L2 Menu</h3>
-			<br>
-			<br>
+			<br> <br>
 			<form class="forms-sample" id="formid" action="l2menupost.html"
 				method="post">
 				<div class="col-sm-9">
@@ -36,10 +35,11 @@
 			</form>
 			<br>
 			<form action="l2menuhelper.html" method="post" id="l2menuformid">
-			<div class="col-sm-9">
+				<div class="col-sm-9">
 					<h4>Select L1 Menu name</h4>
 					<br>
-					<form:select path="l2FormBean" class="form-control" id="btnLink1" name="btnLink1" onchange="l2menuhelper()" >
+					<form:select path="l2FormBean" class="form-control" id="btnLink1"
+						name="btnLink1" onchange="l2menuhelper()">
 						<form:option value="NONE" label="--- Select ---" />
 						<form:options items="${L1MENULIST}" />
 					</form:select>
@@ -51,14 +51,14 @@
 				<div class="col-sm-9">
 					<h4>Enter L2 menu name</h4>
 					<br>
-					<form:input path="l2MenuName" class="form-control"
-						placeholder="Enter L2 Menu Name" />
+						<form:input path="l2MenuName" class="form-control1"
+							placeholder="Enter L2 Menu Name" />
 				</div>
 				<br>
 				<div class="col-sm-9">
 					<h4>Enter Price</h4>
 					<br>
-					<form:input path="price" class="form-control"
+					<form:input path="price" class="form-control1"
 						placeholder="Enter Price" />
 				</div>
 				<br>
@@ -72,35 +72,35 @@
 				</div>
 				<br>
 				<br>
-				<input type="submit" class="btn btn-success mr-2" value="Submit"  >
+				<input type="submit" class="btn btn-success mr-2" value="Submit">
 
 			</form:form>
-			<br> 
+			<br>
 			<c:if test="${not empty L2MENULIST}">
-			<div class="col-lg-12 grid-margin stretch-card" >
-				<div class="card">
-					<div class="card-body">
-						<h4 class="card-title" id="target">L2 Menu Table</h4>
+				<div class="col-lg-12 grid-margin stretch-card">
+					<div class="card">
+						<div class="card-body">
+							<h4 class="card-title" id="target">L2 Menu Table</h4>
 
-						<div class="table-responsive">
-							<table class="table table-dark">
-								<thead>
-									<tr>
-										<th>L2Menu Name</th>
-									</tr>
-								</thead>
-								<tbody>
-									<c:forEach var="s" items="${L2MENULIST}">
+							<div class="table-responsive">
+								<table class="table table-dark">
+									<thead>
 										<tr>
-											<td><c:out value="${s.name}" /></td>
+											<th>L2Menu Name</th>
 										</tr>
-									</c:forEach>
-								</tbody>
-							</table>
+									</thead>
+									<tbody>
+										<c:forEach var="s" items="${L2MENULIST}">
+											<tr>
+												<td><c:out value="${s.name}" /></td>
+											</tr>
+										</c:forEach>
+									</tbody>
+								</table>
+							</div>
 						</div>
 					</div>
 				</div>
-			</div>
 			</c:if>
 		</div>
 	</div>
