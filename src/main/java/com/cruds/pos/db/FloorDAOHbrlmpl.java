@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import com.cruds.pos.entity.Establishment;
 import com.cruds.pos.entity.Floor;
+import com.cruds.pos.entity.FloorTable;
 
 
 @Repository
@@ -38,14 +39,31 @@ public class FloorDAOHbrlmpl implements FloorDAO
 	}
 
 	@Override
-	public List<Floor> getAllfloor() {
+	public List<Floor> getAllfloor(Long estId) {
 		Session session = sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
-		String hql = "FROM Floor";
+		Establishment est = session.load(Establishment.class, estId);
+		String hql = "FROM Floor where establishment=:establishment";
 		Query query = session.createQuery(hql); 
+		query.setParameter("establishment", est);
 		List<Floor> results = query.list();
 		tx.commit();
 		session.close();
 		return results;
+	}
+
+	@Override
+	public boolean createTable(String tableName, Long floorId, int maxCap)
+	{
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		Floor floor = session.load(Floor.class, floorId);
+		FloorTable floorTable = new FloorTable(tableName, floor, maxCap);
+		session.saveOrUpdate(floorTable);
+		tx.commit();
+		session.close();
+		System.out.println("Hibernate DAO Create TABLE Successfully");
+		return true;
+	
 	}
 }

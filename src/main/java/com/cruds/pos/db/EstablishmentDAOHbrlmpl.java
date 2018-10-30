@@ -46,6 +46,7 @@ public class EstablishmentDAOHbrlmpl implements EstablishmentDAO
 		List<Establishment> results = query.list();
 		tx.commit();
 		session.close();
+		System.out.println("Hibernate DAO Get all Establishment done!!!!");
 		return results;
 	
 	}

@@ -22,9 +22,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.cruds.pos.entity.Establishment;
 import com.cruds.pos.entity.Floor;
+import com.cruds.pos.entity.FloorTable;
 import com.cruds.pos.entity.L1Menu;
 import com.cruds.pos.entity.L2Menu;
 import com.cruds.pos.entity.MenuMaster;
@@ -266,7 +268,7 @@ public class HomeController {
 			ModelAndView mv = new ModelAndView("floor", "FloorFormBean", new FloorFormBean());
 		    Map<Long, String> estMap = establishmentService.getAllEstablishment().stream().collect(Collectors.toMap(Establishment :: getId, Establishment :: getName));	
 			mv.addObject("ESTABLISHMENTMAP",estMap);
-			mv.addObject("FLOORLIST", floorService.getAllfloor());
+			//mv.addObject("FLOORLIST", floorService.getAllfloor());
 			return mv;
 	}
 	
@@ -282,7 +284,7 @@ public class HomeController {
 		
 	}
 	
-	@RequestMapping(value="/table", method=RequestMethod.GET)
+	/*@RequestMapping(value="/table", method=RequestMethod.GET)
 	public ModelAndView cretaetable()
 	{	
 			ModelAndView mv = new ModelAndView("table", "TableFormBean", new TableFormBean());
@@ -293,7 +295,7 @@ public class HomeController {
 			mv.addObject("FLOORLIST",mmMap);
 			mv.addObject("FLOORLIST", floorService.getAllfloor());
 			return mv;
-	}
+	}*/
 	
 	
 	@RequestMapping(value="/l3menu", method=RequestMethod.GET)
@@ -351,6 +353,51 @@ public class HomeController {
 		}
 		return "redirect:l3menu.html";
 		
+		
+	}
+	
+	
+	
+	@RequestMapping(value="/table", method=RequestMethod.GET)
+	public ModelAndView createtableget()
+	{	
+			ModelAndView mv = new ModelAndView("table", "TableFormBean", new TableFormBean());
+		    Map<Long, String> estMap = establishmentService.getAllEstablishment().stream().collect(Collectors.toMap(Establishment :: getId, Establishment :: getName));
+			
+			mv.addObject("ESTABLISHMENTMAP",estMap);
+		   
+			return mv;
+		
+	}
+	
+	@RequestMapping(value="/tablepost", method=RequestMethod.POST)
+	public ModelAndView tablehandler(@RequestParam("mId") Long mId)
+	{
+		
+		System.out.println(mId);
+		ModelAndView mv = new ModelAndView("table", "TableFormBean", new TableFormBean());
+		Map<Long, String> floormap = floorService.getAllfloor(mId).stream().collect(Collectors.toMap(Floor :: getId, Floor :: getName));
+		System.out.println(mId);
+		mv.addObject("FLOORLIST",floormap );
+		
+		return mv;
+	}
+	
+	@RequestMapping(value="/table", method=RequestMethod.POST)
+	public ModelAndView tablepost(@ModelAttribute("TableFormBean") TableFormBean tableFormBean)
+	{
+		System.out.println(tableFormBean.getMaxNo());
+		System.out.println(tableFormBean.getTableName());
+		System.out.println(tableFormBean.getTableId());
+		
+    floorService.createFloorTable(tableFormBean.getTableName(), tableFormBean.getTableId(), tableFormBean.getMaxNo());
+		
+    ModelAndView mv = new ModelAndView("table", "TableFormBean", new TableFormBean());
+	
+	
+
+		
+		return  mv;
 		
 	}
 	

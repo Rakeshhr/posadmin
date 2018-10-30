@@ -2,27 +2,63 @@ package com.cruds.pos.formbean;
 
 public class TableFormBean 
 {
-String name;
-Long tid;
-int maxNo;
-public String getName() {
-	return name;
+private String tableName;
+private Long tableId;
+private int maxNo;
+
+
+public TableFormBean() {
+	
 }
-public void setName(String name) {
-	this.name = name;
+
+
+
+public TableFormBean(String tableName, Long tableId, int maxNo) {
+	super();
+	this.tableName = tableName;
+	this.tableId = tableId;
+	this.maxNo = maxNo;
 }
-public Long getTid() {
-	return tid;
+
+public String getTableName() {
+	return tableName;
 }
-public void setTid(Long tid) {
-	this.tid = tid;
+
+
+public void setTableName(String tableName) {
+	this.tableName = tableName;
 }
+
+
+public Long getTableId() {
+	return tableId;
+}
+
+
+public void setTableId(Long tableId) {
+	this.tableId = tableId;
+}
+
+
 public int getMaxNo() {
 	return maxNo;
 }
+
+
 public void setMaxNo(int maxNo) {
 	this.maxNo = maxNo;
 }
+
+
+@Override
+public String toString() {
+	return "TableFormBean [tableName=" + tableName + ", tableId=" + tableId + ", maxNo=" + maxNo + "]";
+}
+
+
+
+
+
 
 
 }

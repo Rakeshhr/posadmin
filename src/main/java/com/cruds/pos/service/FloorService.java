@@ -17,8 +17,13 @@ public class FloorService
 	{
 		return fdao.createfloor(name, estId);
 	}
-	public List<Floor> getAllfloor()
+	public List<Floor> getAllfloor(Long estId)
 	{
-		return fdao.getAllfloor();
+		return fdao.getAllfloor(estId);
+	}
+	
+	public boolean createFloorTable(String tableName, Long floorId, int maxCap)
+	{
+		return fdao.createTable(tableName, floorId, maxCap);
 	}
 }
