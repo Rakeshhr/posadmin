@@ -206,14 +206,22 @@ public class HomeController {
 			return mv;
 		
 	}
-	
+	@RequestMapping(value="/l2menuhelper", method=RequestMethod.POST)
+	public String l2menuhelper(@RequestParam("btnLink1") Long l2menuid,RedirectAttributes redirectAttributes)
+	{
+		System.out.println(l2menuid);
+		//ModelAndView mv = new ModelAndView("l2menu", "l2FormBean", new L2FormBean());
+		//mv.addObject("L2MENULIST",l1menuservice.getAllL2menuList(l2menuid));
+		redirectAttributes.addFlashAttribute("L2MENULIST", l1menuservice.getAllL2menuList(l2menuid));
+		return "redirect:l2menu.html";
+	}
 	@RequestMapping(value="/l2menupost", method=RequestMethod.POST)
 	public ModelAndView l2menuhandler(@RequestParam("mmId") Long mmid)
 	{
 		ModelAndView mv = new ModelAndView("l2menu", "l2FormBean", new L2FormBean());
 		Map<Long, String> l1menumap = l1menuservice.getAllL1menuList(mmid).stream().collect(Collectors.toMap(L1Menu :: getId, L1Menu :: getName));
-		System.out.println(mmid);
-		mv.addObject("L1MENULIST",l1menumap );
+		//System.out.println(id);
+		mv.addObject("L1MENULIST", l1menumap);
 		Map<Long, String> mmMap = menuMasterService.getAllMenu().stream().collect(Collectors.toMap(MenuMaster :: getId, MenuMaster :: getName));
 		
 		mv.addObject("MENUMASTERMAP",mmMap);
@@ -233,7 +241,7 @@ public class HomeController {
 		
 		ModelAndView mv = new ModelAndView("l2menu", "l2FormBean", new L2FormBean());
 		
-		mv.addObject("L2MENULIST",l1menuservice.getAllL2menuList(l2FormBean.getL1mmId()) );
+		
 		
 		return mv;
 		
