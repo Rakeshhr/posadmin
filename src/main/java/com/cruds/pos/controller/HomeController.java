@@ -34,7 +34,7 @@ import com.cruds.pos.entity.Tax;
 import com.cruds.pos.entity.User;
 import com.cruds.pos.formbean.EstablishFormBean;
 import com.cruds.pos.formbean.FloorFormBean;
-import com.cruds.pos.formbean.IdFormBean;
+
 import com.cruds.pos.formbean.L1FormBean;
 import com.cruds.pos.formbean.L2FormBean;
 import com.cruds.pos.formbean.TableFormBean;
