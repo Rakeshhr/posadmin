@@ -4,27 +4,11 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<!-- <script type="text/javascript"> -->
-// 		function hideLink() {
-// 		  var x = document.getElementById('myLink');
-// 		  var b = document.getElementById('btnLink');
-
-
-// 		  if (x.style.display !== 'block') {
-// 		    x.style.display = 'block';
-// 		    b.childNodes[0].nodeValue = "Add";
-
-// 		  } else {
-// 		    x.style.display = 'none';
-// 		    b.childNodes[0].nodeValue = "Add";
-// 		  }
-// 		}
-<!-- 		</script> -->
 		
 		<div class="col-12">
                   <div class="card">
                     <div class="card-body">
-                      <h3 >Add Establishment</h3><br><br>
+                      <h3 >Add Floor</h3><br><br>
 		<form:form class="forms-sample" modelAttribute="FloorFormBean" action="floor.html" method="post">
 		<div class="col-sm-9" >
 			<h4>Select Establishment name</h4><br>
