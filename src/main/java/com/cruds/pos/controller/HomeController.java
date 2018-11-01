@@ -116,7 +116,7 @@ public class HomeController {
 		LocalDate startDate = LocalDate.now();	
 		Tax tax=new Tax(taxname,taxrate,startDate);
 		taxService.addTax(tax);
-		return "redirect:home.html";
+		return "redirect:taxes.html";
 	}
 	
 	@RequestMapping(value="/inactive", method=RequestMethod.POST)
@@ -193,11 +193,12 @@ public class HomeController {
 		return mv;
 	}
 	@RequestMapping(value="/l1menu", method=RequestMethod.POST)
-	public String l1menupost(@ModelAttribute("l1FormBean") L1FormBean l1FormBean,HttpSession session)
+	public String l1menupost(@ModelAttribute("l1FormBean") L1FormBean l1FormBean,HttpSession session,RedirectAttributes redirectAttributes)
 	{
 		Long mmId = (Long) session.getAttribute("mmId");
 		l1menuservice.createL1menu(l1FormBean,mmId);
 		session.removeAttribute("mmId");
+		redirectAttributes.addAttribute("error1", "Please contact system admin!");
 		return "redirect:l1menu.html";	
 	}
 	
@@ -263,13 +264,14 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value="/establishment", method=RequestMethod.POST)
-	public String establishmentupost(@ModelAttribute("EstablishFormBean") EstablishFormBean establishFormBean)
+	public String establishmentupost(@ModelAttribute("EstablishFormBean") EstablishFormBean establishFormBean,RedirectAttributes redirectAttributes)
 	{
 		//System.out.println(l1FormBean.getMmId());
 		//System.out.println(l1FormBean.getTaxId());
 		//System.out.println(l1FormBean.getL1MenuName());
 		//MenuMaster menu=new MenuMaster(menumaster);
 		establishmentService.createEstablishment(establishFormBean.getName(), establishFormBean.getmId());
+		redirectAttributes.addAttribute("error1", "Please contact system admin!");
 		return "redirect:establishment.html";
 		
 		
@@ -287,13 +289,14 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value="/floor", method=RequestMethod.POST)
-	public String postfloor(@ModelAttribute("FloorFormBean") FloorFormBean floorFormBean)
+	public String postfloor(@ModelAttribute("FloorFormBean") FloorFormBean floorFormBean,RedirectAttributes redirectAttributes)
 	{
 		//System.out.println(floorFormBean.getName());
 		//System.out.println(floorFormBean.getEstId());
 		//System.out.println(l1FormBean.getL1MenuName());
 		//MenuMaster menu=new MenuMaster(menumaster);
 		floorService.createFloor(floorFormBean.getName(),floorFormBean.getEstId());
+		redirectAttributes.addAttribute("error", "Please contact system admin!");
 		return "redirect:floor.html";
 		
 	}

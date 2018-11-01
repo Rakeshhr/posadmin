@@ -3,7 +3,15 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-		<div class="col-12">
+
+
+	<c:if test="${param.error1 != null}">
+								<div class="alert alert-success">
+									<p>Insertion successfully created.</p>
+								</div>
+	</c:if>	
+		
+	<div class="col-12">
                   <div class="card">
                     <div class="card-body">
                       <h3 >Add Establishment</h3><br><br>
@@ -23,7 +31,7 @@
         </div>
         <br>
         <br>
-		<input type="submit" class="btn btn-success mr-2" value="Submit">
+		<input type="submit" class="btn btn-success mr-2" value="Submit" onclick="createPost()">
 
 		</form:form>
  					</div>

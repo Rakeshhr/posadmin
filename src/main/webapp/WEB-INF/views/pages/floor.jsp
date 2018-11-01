@@ -5,6 +5,12 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 		
+                  <c:if test="${param.error != null}">
+								<div class="alert alert-success">
+									<p>Insertion successfully created.</p>
+								</div>
+				  </c:if>		
+		
 		<div class="col-12">
                   <div class="card">
                     <div class="card-body">
@@ -31,28 +37,3 @@
  					</div>
                   </div>
                 </div>
-
-<!-- <div class="col-lg-12 grid-margin stretch-card" id="myLink"> -->
-<!--               <div class="card"> -->
-<!--                 <div class="card-body"> -->
-<!--                   <h4 class="card-title" id="target">Establishment Floor</h4> -->
-                
-<!--                   <div class="table-responsive"> -->
-<!--                     <table class="table table-dark"> -->
-<!--                       <thead> -->
-<!--                         <tr> -->
-<!--                          <th>floor Name</th> -->
-<!--                         </tr> -->
-<!--                       </thead> -->
-<!--                       <tbody> -->
-<%--                         <c:forEach var="s" items="${FLOORLIST}"> --%>
-<!-- 						<tr> -->
-<%-- 						<td><c:out value="${s.name}"/></td> --%>
-<!-- 						</tr> -->
-<%-- 						</c:forEach> --%>
-<!--                       </tbody> -->
-<!--                     </table> -->
-<!--                   </div> -->
-<!--                 </div> -->
-<!--               </div> -->
-<!--             </div> -->
