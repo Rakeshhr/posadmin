@@ -2,4 +2,4 @@
 
 
 
-    <c:redirect url="menu.html"/>    
+    <c:redirect url="home.html"/>    

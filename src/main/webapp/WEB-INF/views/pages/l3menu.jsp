@@ -4,6 +4,14 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+
+<c:if test="${param.error != null}">
+			<div class="alert alert-success">
+				<p>Insertion successfully created.</p>
+			</div>
+</c:if>	
+
 <script type="text/javascript">
 
 	function myfun(){
@@ -35,7 +43,7 @@
 <div class="col-12">
 	<div class="card">
 		<div class="card-body">
-			<h3>Add L2 Menu</h3>
+			<h3>Add L3 Menu</h3>
 			<br>
 			<br>
 			<form class="forms-sample" id="formid" action="l3menupost1.html"
@@ -66,7 +74,7 @@
 				</div>
 			</form>
 			<br>
-			<form action="l3menupost3.html" class="forms-sample" id="formid2">
+			<form action="l3menupost3.html" class="forms-sample" id="formid2" method="post">
 			<div class="col-sm-9">
 					<h4>Select L2 Menu name</h4>
 					<br>

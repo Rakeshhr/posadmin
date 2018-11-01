@@ -46,7 +46,6 @@ import com.cruds.pos.service.L1MenuService;
 import com.cruds.pos.service.MenuMasterService;
 import com.cruds.pos.service.TaxService;
 import com.cruds.pos.service.UserService;
-import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 
 
 
@@ -80,9 +79,10 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value="/createuser", method = RequestMethod.POST)
-	public String createUserPage(@ModelAttribute("user") User user)
+	public String createUserPage(@ModelAttribute("user") User user,RedirectAttributes redirectAttributes)
 	{
 		userService.create(user);
+		redirectAttributes.addAttribute("error", "Please contact system admin!");
 		return "redirect:home.html";
 	}
 	
@@ -95,7 +95,7 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value="/taxes", method=RequestMethod.POST)
-	public ModelAndView addTaxespost(@RequestParam("form_check") String check)
+	public ModelAndView addTaxespost(@RequestParam("form_check") String check,RedirectAttributes redirectAttributes)
 	{
 		ModelAndView mv = new ModelAndView("taxes", "taxes", new Tax());
 		System.out.println(check);
@@ -107,6 +107,7 @@ public class HomeController {
 		{
 			mv.addObject("TAXLIST", taxService.getAllActiveTax());	
 		}
+	    redirectAttributes.addAttribute("error", "Please contact system admin!");
 		return mv;		
 	}
 	
@@ -155,11 +156,11 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value="/menumaster", method=RequestMethod.POST)
-	public String menumasterpost(@RequestParam("menumaster") String menumaster)
+	public String menumasterpost(@RequestParam("menumaster") String menumaster,RedirectAttributes redirectAttributes)
 	{
-	
 		MenuMaster menu = new MenuMaster(menumaster);
 		menuMasterService.createmenumaster(menu);
+		redirectAttributes.addAttribute("error", "Please contact system admin!");
 		return "redirect:menumaster.html";
 		
 	}
@@ -182,7 +183,6 @@ public class HomeController {
 	public ModelAndView l1menuhelper(@RequestParam("mmId") Long mmId,HttpSession session,RedirectAttributes redirectAttributes)
 	{
 		System.out.println(mmId);
-		
 		session.setAttribute("mmId", mmId);
 		ModelAndView mv = new ModelAndView("l1menu", "l1FormBean", new L1FormBean());
 		mv.addObject("L1MENULIST", l1menuservice.getAllL1menulist(mmId));
@@ -242,7 +242,7 @@ public class HomeController {
 		return mv;
 	}
 	@RequestMapping(value="/l2menu", method=RequestMethod.POST)
-	public ModelAndView l2menupost(@ModelAttribute("l2FormBean") L2FormBean l2FormBean,HttpSession session)
+	public ModelAndView l2menupost(@ModelAttribute("l2FormBean") L2FormBean l2FormBean,HttpSession session,RedirectAttributes redirectAttributes)
 	{
 		System.out.println(l2FormBean);
 		Long l1menuid = (Long) session.getAttribute("l1menuid");
@@ -250,8 +250,9 @@ public class HomeController {
 		ModelAndView mv = new ModelAndView("l2menu", "l2FormBean", new L2FormBean());
 		Map<Long, String> mmMap = menuMasterService.getAllMenu().stream().collect(Collectors.toMap(MenuMaster :: getId, MenuMaster :: getName));		
 		mv.addObject("MENUMASTERMAP",mmMap);
-		return mv;
-		
+		mv.addObject("L2MENULIST", l1menuservice.getAllL2menuList(l1menuid));
+		redirectAttributes.addAttribute("error", "Please contact system admin!");
+		return mv;		
 	}
 	
 	@RequestMapping(value="/establishment", method=RequestMethod.GET)
@@ -288,17 +289,27 @@ public class HomeController {
 			return mv;
 	}
 	
-	@RequestMapping(value="/floor", method=RequestMethod.POST)
-	public String postfloor(@ModelAttribute("FloorFormBean") FloorFormBean floorFormBean,RedirectAttributes redirectAttributes)
+	
+	
+	
+	@RequestMapping(value="/floorhelper", method=RequestMethod.POST)
+	public String floor_helper(@RequestParam("floorbtnLink") Long establish_id,HttpSession session,RedirectAttributes redirectAttributes)
 	{
-		//System.out.println(floorFormBean.getName());
-		//System.out.println(floorFormBean.getEstId());
-		//System.out.println(l1FormBean.getL1MenuName());
-		//MenuMaster menu=new MenuMaster(menumaster);
-		floorService.createFloor(floorFormBean.getName(),floorFormBean.getEstId());
-		redirectAttributes.addAttribute("error", "Please contact system admin!");
+		System.out.println(establish_id);
+		session.setAttribute("establish_id", establish_id);
+		redirectAttributes.addFlashAttribute("FLOORLIST", floorService.getAllfloor(establish_id));
 		return "redirect:floor.html";
-		
+	}
+	
+	@RequestMapping(value="/floor", method=RequestMethod.POST)
+	public ModelAndView postfloor(@ModelAttribute("FloorFormBean") FloorFormBean floorFormBean,HttpSession session,RedirectAttributes redirectAttributes)
+	{		
+	Long establish_id = (Long) session.getAttribute("establish_id");
+		System.out.println(establish_id);
+		floorService.createFloor(floorFormBean, establish_id);
+		ModelAndView mv = new ModelAndView("floor", "FloorFormBean", new FloorFormBean());
+		redirectAttributes.addAttribute("error", "Please contact system admin!");
+		return mv;	
 	}
 	
 	/*@RequestMapping(value="/table", method=RequestMethod.GET)
@@ -377,13 +388,15 @@ public class HomeController {
 		return mv;
 	}
 	@RequestMapping(value="/l3menu", method=RequestMethod.POST)
-	public ModelAndView l3menupost(@ModelAttribute("l3FormBean") L3FormBean l3FormBean,HttpSession session)
+	public ModelAndView l3menupost(@ModelAttribute("l3FormBean") L3FormBean l3FormBean,HttpSession session,RedirectAttributes
+			redirectAttributes)
 	{
 		Long l2mmid = (Long) session.getAttribute("l2mmId");
 		l1menuservice.createl3menu(l3FormBean,l2mmid);
 		ModelAndView mv = new ModelAndView("l3menu", "l3FormBean", new L3FormBean());
 		Map<Long, String> mmMap = menuMasterService.getAllMenu().stream().collect(Collectors.toMap(MenuMaster :: getId, MenuMaster :: getName));		
 		mv.addObject("MENUMASTERMAP",mmMap);
+		redirectAttributes.addAttribute("error", "Please contact system admin!");
 		return mv;
 		
 		
@@ -396,11 +409,19 @@ public class HomeController {
 	{	
 			ModelAndView mv = new ModelAndView("table", "TableFormBean", new TableFormBean());
 		    Map<Long, String> estMap = establishmentService.getAllEstablishment().stream().collect(Collectors.toMap(Establishment :: getId, Establishment :: getName));
-			
 			mv.addObject("ESTABLISHMENTMAP",estMap);
-		   
 			return mv;
 		
+	}
+	
+	
+	@RequestMapping(value="/tablehelper", method=RequestMethod.POST)
+	public String floor_table_helper(@RequestParam("tablebtnLink") Long fllor_table_id,HttpSession session,RedirectAttributes redirectAttributes)
+	{
+		System.out.println(fllor_table_id);
+		session.setAttribute("fllor_table_id", fllor_table_id);
+		redirectAttributes.addFlashAttribute("TABLELIST", floorService.getAllTable(fllor_table_id));
+		return "redirect:table.html";
 	}
 	
 	@RequestMapping(value="/tablepost", method=RequestMethod.POST)
@@ -411,25 +432,22 @@ public class HomeController {
 		ModelAndView mv = new ModelAndView("table", "TableFormBean", new TableFormBean());
 		Map<Long, String> floormap = floorService.getAllfloor(mId).stream().collect(Collectors.toMap(Floor :: getId, Floor :: getName));
 		System.out.println(mId);
-		mv.addObject("FLOORLIST",floormap );
+		mv.addObject("FLOORMAP",floormap );
 		
 		return mv;
 	}
 	
 	@RequestMapping(value="/table", method=RequestMethod.POST)
-	public ModelAndView tablepost(@ModelAttribute("TableFormBean") TableFormBean tableFormBean)
+	public ModelAndView tablepost(@ModelAttribute("TableFormBean") TableFormBean tableFormBean,HttpSession session,RedirectAttributes redirectAttributes)
 	{
 		System.out.println(tableFormBean.getMaxNo());
 		System.out.println(tableFormBean.getTableName());
-		System.out.println(tableFormBean.getTableId());
-		
-    floorService.createFloorTable(tableFormBean.getTableName(), tableFormBean.getTableId(), tableFormBean.getMaxNo());
-		
-    ModelAndView mv = new ModelAndView("table", "TableFormBean", new TableFormBean());
-	
-	
-
-		
+		//System.out.println(tableFormBean.getTableId());
+		Long fllor_table_id = (Long) session.getAttribute("fllor_table_id");
+		System.out.println(fllor_table_id);
+		floorService.createFloorTable(tableFormBean, fllor_table_id);
+		ModelAndView mv = new ModelAndView("table", "TableFormBean", new TableFormBean());
+		redirectAttributes.addAttribute("error", "Please contact system admin!");
 		return  mv;
 		
 	}
