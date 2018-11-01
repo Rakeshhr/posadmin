@@ -34,7 +34,7 @@ import com.cruds.pos.entity.Tax;
 import com.cruds.pos.entity.User;
 import com.cruds.pos.formbean.EstablishFormBean;
 import com.cruds.pos.formbean.FloorFormBean;
-import com.cruds.pos.formbean.IdFormBean;
+
 import com.cruds.pos.formbean.L1FormBean;
 import com.cruds.pos.formbean.L2FormBean;
 import com.cruds.pos.formbean.TableFormBean;
@@ -182,7 +182,6 @@ public class HomeController {
 	public ModelAndView l1menuhelper(@RequestParam("mmId") Long mmId,HttpSession session,RedirectAttributes redirectAttributes)
 	{
 		System.out.println(mmId);
-		
 		session.setAttribute("mmId", mmId);
 		ModelAndView mv = new ModelAndView("l1menu", "l1FormBean", new L1FormBean());
 		mv.addObject("L1MENULIST", l1menuservice.getAllL1menulist(mmId));
@@ -249,8 +248,8 @@ public class HomeController {
 		ModelAndView mv = new ModelAndView("l2menu", "l2FormBean", new L2FormBean());
 		Map<Long, String> mmMap = menuMasterService.getAllMenu().stream().collect(Collectors.toMap(MenuMaster :: getId, MenuMaster :: getName));		
 		mv.addObject("MENUMASTERMAP",mmMap);
-		return mv;
-		
+		mv.addObject("L2MENULIST", l1menuservice.getAllL2menuList(l1menuid));
+		return mv;		
 	}
 	
 	@RequestMapping(value="/establishment", method=RequestMethod.GET)

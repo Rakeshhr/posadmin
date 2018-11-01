@@ -5,6 +5,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 
+
 <script type="text/javascript">
 function floorhelper()
 {
@@ -22,7 +23,7 @@ function floorhelper()
 		<div class="col-12">
                   <div class="card">
                     <div class="card-body">
-                      <h3 >Add Establishment</h3><br><br>
+                      <h3 >Add Floor</h3><br><br>
                       <form action="floorhelper.html" method="post" id="floorformid">
 				
 				<div class="col-sm-9">
@@ -36,7 +37,7 @@ function floorhelper()
 					</div>
 				<br>
 				</form>
-                      
+		
 		<form:form class="forms-sample" modelAttribute="FloorFormBean" action="floor.html" method="post">
 		
 	

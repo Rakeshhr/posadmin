@@ -23,34 +23,29 @@ function  establishfun()
 	
 
 </script>
-
-
-		<div class="col-12">
-                  <div class="card">
-                    <div class="card-body">
-                      <h3 >Add Establishment</h3><br><br>
+		
+	
+		<div class="col-sm-9">
+                 
+                      <h3>Add Table and It's Capacity</h3><br>
 		<form class="forms-sample" id="formid" action="tablepost.html"
 				method="post">
 	
-		
-		<h3 >Add Establishment</h3><br><br>
 		
 		<div class="col-sm-9" >
 			<h4>Select Establishment name</h4><br>
  			<form:select path="TableFormBean" class="form-control" id = "mId"  name = "mId" onchange="establishfun()"> 
 				<form:option value="NONE" label="--- Select ---"/>
 			    <form:options items="${ESTABLISHMENTMAP}"/>
-			    
 			</form:select> 
 		</div>
-		
-		
+
 			</form>
 		<br><br><br>
 				
 				<form action="tablehelper.html" method="post" id="tableformid">
 				
-				<div class="col-sm-9">
+					<div class="col-sm-9">
 					<h4>Select Floor name</h4>
 					<br>
 						<form:select path="TableFormBean" class="form-control"  id="tablebtnLink"
@@ -59,11 +54,12 @@ function  establishfun()
 							<form:options items="${FLOORMAP}" />
 						</form:select>
 					</div>
-				<br>
-				</form>
-				
+					</form>
+
 			<form:form class="forms-sample" 
 				modelAttribute="TableFormBean" action="table.html" method="post">
+				
+				
 
 				<div class="col-sm-9">
                    <h4>Enter Table name</h4><br>
