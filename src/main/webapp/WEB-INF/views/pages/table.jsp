@@ -6,10 +6,17 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <script type="text/javascript">
+function tablehelper() {
+	var v2 = document.getElementById("tablebtnLink").value;
+	//alert(v2);
+	document.getElementById("tableformid").submit();
+}
+
+
 function  establishfun()
 {
 	var v1 = document.getElementById("mId").value;
-	alert(v1);
+	//alert(v1);
 	   document.getElementById("formid").submit();
 }
 	
@@ -37,27 +44,27 @@ function  establishfun()
 			</form:select> 
 		</div>
 		
-		</form>
-		</div>
-		</div>
-		</div>
+		
+			</form>
 		<br><br><br>
 				
+				<form action="tablehelper.html" method="post" id="tableformid">
 				
+				<div class="col-sm-9">
+					<h4>Select Floor name</h4>
+					<br>
+						<form:select path="TableFormBean" class="form-control"  id="tablebtnLink"
+						name="tablebtnLink" onchange="tablehelper()">
+							<form:option value="0" label="--- Select ---" />
+							<form:options items="${FLOORMAP}" />
+						</form:select>
+					</div>
+				<br>
+				</form>
 				
 			<form:form class="forms-sample" 
 				modelAttribute="TableFormBean" action="table.html" method="post">
 
-
-				<div class="col-sm-9">
-					<h4>Select Floor name</h4>
-					<br>
-						<form:select path="tableId" class="form-control">
-							<form:option value="0" label="--- Select ---" />
-							<form:options items="${FLOORLIST}" />
-						</form:select>
-					</div>
-				<br>
 				<div class="col-sm-9">
                    <h4>Enter Table name</h4><br>
                    <form:input path = "tableName" class="form-control"  placeholder="Enter table Name"  />
@@ -74,29 +81,32 @@ function  establishfun()
 				
 			
 			
-<!-- 			<div class="col-lg-12 grid-margin stretch-card" id="myLink"> -->
-<!--               <div class="card"> -->
-<!--                 <div class="card-body"> -->
-<!--                   <h4 class="card-title" id="target">Establishment Floor</h4> -->
-                
-<!--                   <div class="table-responsive"> -->
-<!--                     <table class="table table-dark"> -->
-<!--                       <thead> -->
-<!--                         <tr> -->
-<!--                          <th>table Name</th> -->
-<!--                         </tr> -->
-<!--                       </thead> -->
-<!--                       <tbody> -->
-<%--                         <c:forEach var="s" items="${TABLELIST}"> --%>
-<!-- 						<tr> -->
-<%-- 						<td><c:out value="${s.name}"/></td> --%>
-<!-- 						</tr> -->
-<%-- 						</c:forEach> --%>
-<!--                       </tbody> -->
-<!--                     </table> -->
-<!--                   </div> -->
-<!--                 </div> -->
-<!--               </div> -->
-<!--             </div> -->
-      
+			<br>
+			<c:if test="${not empty TABLELIST}">
+				<div class="col-lg-12 grid-margin stretch-card">
+					<div class="card">
+						<div class="card-body">
+							<div class="table-responsive">
+								<table class="table table-dark">
+									<thead>
+										<tr>
+											<th>Table Name</th>
+										</tr>
+									</thead>
+									<tbody>
+										<c:forEach var="s" items="${TABLELIST}">
+											<tr>
+												<td><c:out value="${s.name}" /></td>
+											</tr>
+										</c:forEach>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</c:if>
 		
+			</div>
+		</div>
+		</div>

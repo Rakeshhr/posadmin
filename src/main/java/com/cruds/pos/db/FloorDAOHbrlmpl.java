@@ -58,12 +58,33 @@ public class FloorDAOHbrlmpl implements FloorDAO
 		Session session = sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
 		Floor floor = session.load(Floor.class, floorId);
+		
+		System.out.println("Fllor Loaded!!!");
 		FloorTable floorTable = new FloorTable(tableName, floor, maxCap);
+		System.out.println("Floor Table Object Created...");
 		session.saveOrUpdate(floorTable);
+		
+		System.out.println("Floor table Stored in database");
 		tx.commit();
 		session.close();
 		System.out.println("Hibernate DAO Create TABLE Successfully");
 		return true;
 	
+	}
+
+	@Override
+	public  List<FloorTable> getAllTable(Long floorId)
+	{
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		Floor flr = session.load(Floor.class, floorId);
+		String hql = "FROM FloorTable where floor=:floor";
+		Query query = session.createQuery(hql); 
+		query.setParameter("floor", flr);
+		List<FloorTable> results = query.list();
+		tx.commit();
+		session.close();
+		System.out.println("Getting all table");
+		return results;
 	}
 }

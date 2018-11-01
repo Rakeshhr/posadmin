@@ -38,7 +38,7 @@
 				<div class="col-sm-9">
 					<h4>Select L1 Menu name</h4>
 					<br>
-					<form:select path="l2FormBean" class="form-control" id="btnLink1"
+					<form:select path="l2FormBean" class="form-control" id="btnLink2"
 						name="btnLink1" onchange="l2menuhelper()">
 						<form:option value="NONE" label="--- Select ---" />
 						<form:options items="${L1MENULIST}" />

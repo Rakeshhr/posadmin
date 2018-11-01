@@ -4,36 +4,42 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<!-- <script type="text/javascript"> -->
-// 		function hideLink() {
-// 		  var x = document.getElementById('myLink');
-// 		  var b = document.getElementById('btnLink');
+
+<script type="text/javascript">
+function floorhelper()
+{
+	var v2 = document.getElementById("floorbtnLink").value;
+	//alert(v2);
+	document.getElementById("floorformid").submit();
+
+	
+}
 
 
-// 		  if (x.style.display !== 'block') {
-// 		    x.style.display = 'block';
-// 		    b.childNodes[0].nodeValue = "Add";
+</script>
 
-// 		  } else {
-// 		    x.style.display = 'none';
-// 		    b.childNodes[0].nodeValue = "Add";
-// 		  }
-// 		}
-<!-- 		</script> -->
-		
+
 		<div class="col-12">
                   <div class="card">
                     <div class="card-body">
                       <h3 >Add Establishment</h3><br><br>
+                      <form action="floorhelper.html" method="post" id="floorformid">
+				
+				<div class="col-sm-9">
+					<h4>Select Establishment name</h4>
+					<br>
+						<form:select path="FloorFormBean" class="form-control"  id="floorbtnLink"
+						name="floorbtnLink" onchange="floorhelper()">
+							<form:option value="0" label="--- Select ---" />
+							<form:options items="${ESTABLISHMENTMAP}" />
+						</form:select>
+					</div>
+				<br>
+				</form>
+                      
 		<form:form class="forms-sample" modelAttribute="FloorFormBean" action="floor.html" method="post">
-		<div class="col-sm-9" >
-			<h4>Select Establishment name</h4><br>
- 			<form:select path="estId" class="form-control">
-				<form:option value="NONE" label="--- Select ---"/>
-			    <form:options items="${ESTABLISHMENTMAP}"/>
-			    
-			</form:select> 
-		</div>
+		
+	
 		<br>
 		<div class="col-sm-9">
             <h4>Enter floor name</h4><br>
@@ -44,31 +50,34 @@
 		<input type="submit" class="btn btn-success mr-2" value="Submit">
 
 		</form:form>
+		
+				<br>
+			<c:if test="${not empty FLOORLIST}">
+				<div class="col-lg-12 grid-margin stretch-card">
+					<div class="card">
+						<div class="card-body">
+							<div class="table-responsive">
+								<table class="table table-dark">
+									<thead>
+										<tr>
+											<th>Floor Name</th>
+										</tr>
+									</thead>
+									<tbody>
+										<c:forEach var="s" items="${FLOORLIST}">
+											<tr>
+												<td><c:out value="${s.name}" /></td>
+											</tr>
+										</c:forEach>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</c:if>
+		
  					</div>
                   </div>
                 </div>
 
-<!-- <div class="col-lg-12 grid-margin stretch-card" id="myLink"> -->
-<!--               <div class="card"> -->
-<!--                 <div class="card-body"> -->
-<!--                   <h4 class="card-title" id="target">Establishment Floor</h4> -->
-                
-<!--                   <div class="table-responsive"> -->
-<!--                     <table class="table table-dark"> -->
-<!--                       <thead> -->
-<!--                         <tr> -->
-<!--                          <th>floor Name</th> -->
-<!--                         </tr> -->
-<!--                       </thead> -->
-<!--                       <tbody> -->
-<%--                         <c:forEach var="s" items="${FLOORLIST}"> --%>
-<!-- 						<tr> -->
-<%-- 						<td><c:out value="${s.name}"/></td> --%>
-<!-- 						</tr> -->
-<%-- 						</c:forEach> --%>
-<!--                       </tbody> -->
-<!--                     </table> -->
-<!--                   </div> -->
-<!--                 </div> -->
-<!--               </div> -->
-<!--             </div> -->

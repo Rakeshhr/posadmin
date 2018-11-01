@@ -286,15 +286,37 @@ public class HomeController {
 			return mv;
 	}
 	
+	
+	
+	
+	@RequestMapping(value="/floorhelper", method=RequestMethod.POST)
+	public String floor_helper(@RequestParam("floorbtnLink") Long establish_id,HttpSession session,RedirectAttributes redirectAttributes)
+	{
+		System.out.println(establish_id);
+		session.setAttribute("establish_id", establish_id);
+		redirectAttributes.addFlashAttribute("FLOORLIST", floorService.getAllfloor(establish_id));
+		return "redirect:floor.html";
+	}
+	
 	@RequestMapping(value="/floor", method=RequestMethod.POST)
-	public String postfloor(@ModelAttribute("FloorFormBean") FloorFormBean floorFormBean)
+	public ModelAndView postfloor(@ModelAttribute("FloorFormBean") FloorFormBean floorFormBean,HttpSession session)
 	{
 		//System.out.println(floorFormBean.getName());
 		//System.out.println(floorFormBean.getEstId());
 		//System.out.println(l1FormBean.getL1MenuName());
 		//MenuMaster menu=new MenuMaster(menumaster);
-		floorService.createFloor(floorFormBean.getName(),floorFormBean.getEstId());
-		return "redirect:floor.html";
+		
+		
+	Long establish_id = (Long) session.getAttribute("establish_id");
+		
+		System.out.println(establish_id);
+		
+    floorService.createFloor(floorFormBean, establish_id);
+
+    ModelAndView mv = new ModelAndView("floor", "FloorFormBean", new FloorFormBean());
+
+	
+		return mv;
 		
 	}
 	
@@ -400,6 +422,16 @@ public class HomeController {
 		
 	}
 	
+	
+	@RequestMapping(value="/tablehelper", method=RequestMethod.POST)
+	public String floor_table_helper(@RequestParam("tablebtnLink") Long fllor_table_id,HttpSession session,RedirectAttributes redirectAttributes)
+	{
+		System.out.println(fllor_table_id);
+		session.setAttribute("fllor_table_id", fllor_table_id);
+		redirectAttributes.addFlashAttribute("TABLELIST", floorService.getAllTable(fllor_table_id));
+		return "redirect:table.html";
+	}
+	
 	@RequestMapping(value="/tablepost", method=RequestMethod.POST)
 	public ModelAndView tablehandler(@RequestParam("mId") Long mId)
 	{
@@ -408,22 +440,26 @@ public class HomeController {
 		ModelAndView mv = new ModelAndView("table", "TableFormBean", new TableFormBean());
 		Map<Long, String> floormap = floorService.getAllfloor(mId).stream().collect(Collectors.toMap(Floor :: getId, Floor :: getName));
 		System.out.println(mId);
-		mv.addObject("FLOORLIST",floormap );
+		mv.addObject("FLOORMAP",floormap );
 		
 		return mv;
 	}
 	
 	@RequestMapping(value="/table", method=RequestMethod.POST)
-	public ModelAndView tablepost(@ModelAttribute("TableFormBean") TableFormBean tableFormBean)
+	public ModelAndView tablepost(@ModelAttribute("TableFormBean") TableFormBean tableFormBean,HttpSession session)
 	{
 		System.out.println(tableFormBean.getMaxNo());
 		System.out.println(tableFormBean.getTableName());
-		System.out.println(tableFormBean.getTableId());
+		//System.out.println(tableFormBean.getTableId());
 		
-    floorService.createFloorTable(tableFormBean.getTableName(), tableFormBean.getTableId(), tableFormBean.getMaxNo());
 		
+		Long fllor_table_id = (Long) session.getAttribute("fllor_table_id");
+		
+		System.out.println(fllor_table_id);
+		
+    floorService.createFloorTable(tableFormBean, fllor_table_id);
+
     ModelAndView mv = new ModelAndView("table", "TableFormBean", new TableFormBean());
-	
 	
 
 		
